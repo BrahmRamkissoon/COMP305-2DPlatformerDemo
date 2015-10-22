@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour {
 	{
 	    this._rigidBody2D = gameObject.GetComponent<Rigidbody2D>();
 	    this._transform = gameObject.GetComponent<Transform>();
-	    //this._animator = gameObject.GetComponent<Animator>();
+	    this._animator = gameObject.GetComponent<Animator>();
 
         // Reference to audio source
         this._audioSources = gameObject.GetComponents<AudioSource>();
@@ -74,6 +74,9 @@ public class PlayerController : MonoBehaviour {
             // we're moving
 	        if (this._moving > 0)
 	        {
+                // set anim state
+	            this._animator.SetInteger( "AnimState", 1 );    // play walk clip
+
 	            // moving right
 	            if (absVelX < this.velocityRange.vMax)
 	            {
@@ -90,7 +93,8 @@ public class PlayerController : MonoBehaviour {
 	    } else if (this._moving == 0)
 	    {
             // we're idle
-	    }
+            this._animator.SetInteger("AnimState", 0);  // play idle clip
+        }
 
         this._rigidBody2D.AddForce(new Vector2 (forceX, forceY));
 	    
